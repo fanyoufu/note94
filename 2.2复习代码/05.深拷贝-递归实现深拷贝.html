@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>深拷贝与浅拷贝</h1>
+    <script src="./jquery-1.12.4.min.js"></script>
+    <script>
+        var obj = {
+            name: '小王',
+            hobby:['reading','running']
+        }
+        // 目标：把obj这个对象复制一份，得到obj1。保证obj与obj1是一样的，且相互独立的两个对象
+        // var obj1 = obj; // ?这样是拷贝吗？
+
+        // // 思路：
+        // // 把obj中的属性全取来，做循环，把属性值赋给obj1
+        // var obj1 = {}; 
+        // // 把obj中的属性全取出来 for in
+        // for(var key in obj){
+        //     // key是obj中的属性名，
+        //     // 让obj1中也要有这个属性，并且值与obj是相同的
+        //     // console.log(key);
+        //     obj1[key] = obj[key]
+            
+        // }
+
+        // 对于当前要拷贝的内容，如果还是一个对象，则要递归调用，而不是直接赋值
+        function deepCopy(obj){
+            // 定义一个空的对象或者是数组
+            // 如果当前要复制的是数组就用一个空数组，或者用一个空对象。
+            // var tempObj =  Array.isArray(obj) ? [] : {}
+            var tempObj = {}
+            if(  Array.isArray(obj) ) {
+                tempObj = []
+            }
+
+            // var tempObj =  {}
+            // .... 操作
+            for(var key in obj) {
+                var t = obj[key]
+                // 当要拷贝的内容还是一个对象或者是数组
+                if(Array.isArray(t) || typeof t === "object") {
+                    tempObj[key] = deepCopy(obj[key])
+                }
+                else // 当要拷贝的内容只是一个基本类型的数据
+                {
+                    tempObj[key] = t
+                }
+            }
+            return tempObj
+        }
+
+        var obj1 = deepCopy(obj);
+        // 验证:
+        // 给 obj1.hobby.添一个信息，不会影响obj.hobby. 
+        obj1.hobby === obj.hobby; // false
+        
+    </script>
+
+</body>
+</html>

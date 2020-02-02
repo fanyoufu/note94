@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- // 引入富文件编辑器 -->
+    <!-- 它就是一个js插件 -->
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+</head>
+<body>
+    <textarea>Hello, World!  普通的！</textarea>
+    <textarea id="mytextarea">Hello, World! tinymce富文本编辑器 </textarea>
+    <script>
+        // 把指定的文本域转成富文本编辑器
+        tinymce.init({
+            selector: '#mytextarea'
+        });
+    </script>
+</body>
+</html>

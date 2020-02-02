@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>深拷贝与浅拷贝</h1>
+    <script>
+        var obj = {
+            name: '小王',
+            hobby:['reading','running']
+        }
+        // 目标：把obj这个对象复制一份，得到obj1。保证obj与obj1是一样的，且相互独立的两个对象
+        // var obj1 = obj; // ?这样是拷贝吗？
+
+        // 思路：
+        // 把obj中的属性全取来，做循环，把属性值赋给obj1
+        var obj1 = {}; 
+        // 把obj中的属性全取出来 for in
+        for(var key in obj){
+            // key是obj中的属性名，
+            // 让obj1中也要有这个属性，并且值与obj是相同的
+            // console.log(key);
+            obj1[key] = obj[key]
+            
+        }
+
+        // 这里是浅拷贝。浅拷贝只能拷贝一层。 如果对象中只有一层（对象的属性值不是对象与数组)它是可以正常工作了。
+        //              如果对象有多层（理解为多维数组）它就不能实现真正的 “拷贝”的功能了。
+    </script>
+
+</body>
+</html>

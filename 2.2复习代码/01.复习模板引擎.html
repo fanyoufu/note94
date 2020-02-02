@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>复习arttemplate</h1>
+    <table>
+        <thead>
+
+            <tr><th>序号</th><th>名字</th><th>别名</th></tr> 
+        </thead>
+        <tbody id="tbody">
+
+            <!-- <tr><td>1</td><td>科学</td><td>kexue</td></tr>  -->
+        </tbody>
+    </table>
+    <pre>
+        1. 引入arttemplate.js
+        2. 准备数据。这里的数据一般就是通过ajax从后端取回来的数据。必须是对象格式。
+        3. 准备模板。根据数据的格式来准备模板。
+        4. 渲染成html字符串。htmlStr = template('模板id'，数据)
+        5. 把html字符串显示在网页上。
+    </pre>
+    <script src="./template-web.js"></script>
+    <script id="tmp" type="text/html">
+        {{each data item index}}
+            <tr><td>{{index+1}}</td><td>{{item.name}}</td><td>{{item.slug}}</td></tr> 
+        {{/each}}
+    </script>
+    <script>
+
+    // 2. 获取数据
+    var result = {
+        "msg":"分类获取完毕",
+        "code":200,
+        "data":[
+            {"id":1,"name":"科学","slug":"kexue"},
+            {"id":2,"name":"八卦","slug":"bagua"},
+            {"id":4,"name":"新闻","slug":"news"},
+            {"id":5,"name":"奇异","slug":"outhome"},
+            {"id":8,"name":"军事","slug":"eyekillyou"},
+            {"id":14,"name":"情感","slug":"情感"},
+            {"id":1579090377869,"name":"娱乐","slug":"娱乐"}]
+        }
+    // 3. 这些数据在页面上是什么样的方式显示给用户的？
+    //   表格 。 一般是由设计师决定的。
+    // 4. 准备模板。根据数据的格式来准备模板
+
+    // 5. 渲染成html字符串
+        var htmlStr = template('tmp', result)
+        console.log(htmlStr);
+    // 6. 显示在页面上
+        document.getElementById("tbody").innerHTML = htmlStr
+        
+    </script>
+</body>
+</html>

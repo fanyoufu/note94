@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- action:指定form中的数据要交到哪里？
+    method:用来指定交数据的方式 -->
+    <form id="form" action='http://ajax.frontend.itheima.net:3006/api/addbook' method="post" target="_blank">
+        <div class="required inline  field">
+            <label>书名</label>
+            <input placeholder="书名" name="bookname" type="text">
+        </div>
+        <div class="required inline  field">
+            <label>作者</label>
+            <input name="author" placeholder="作者" type="text">
+        </div>
+        <div class="required inline  field">
+            <label>出版社</label>
+            <input name="publisher" placeholder="出版社" type="text">
+        </div>
+        <button class="ui button blue submit" type="submit">添加</button>
+    </from>
+    <!-- 用表单来提交： -->
+    <!-- 1. 要给表单元素设置name。并且这个值要与接口中要的参数保持一致 -->
+    <!-- 2. 它会导致页面跳转 -->
+
+    <!-- 如何希望用ajax技术来提交数据，则表单存在的意义就是用来快速收集用户的填入的信息。 -->
+    <script src="./jquery-1.12.4.min.js"></script>
+    <script>
+        $(function() {
+            $('#form').submit(function(e) {
+                console.log(e);
+                e.preventDefault()
+                $.ajax({
+                    url: 'http://ajax.frontend.itheima.net:3006/api/addbook',
+                    type: 'post',
+                    data: $('#form').serialize(), 
+                    // 快速获取表单元素的值。
+                    // bookname=11&author=22&publisher=222
+                    success:function(res){
+                        console.log(res);  
+                    }
+                }) 
+            })
+        })
+    </script>
+
+</body>
+</html>
