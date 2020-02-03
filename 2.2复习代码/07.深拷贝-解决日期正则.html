@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>深拷贝与浅拷贝</h1>
+    <script src="./jquery-1.12.4.min.js"></script>
+    <script src="https://cdn.bootcss.com/lodash.js/4.17.15/lodash.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script>
+        var obj = {
+            reg: /abc/ig,
+            date: new Date()
+        }
+        function isObj(obj) {
+            var t = (typeof obj === 'object' || typeof obj === 'function') && obj !== null
+            return t
+        }
+        function deepClone(obj) {
+            var tempObj = Array.isArray(obj) ? [] : {}
+            for (var key in obj) {
+                debugger
+                var t = obj[key]
+                tempObj[key] = isObj(t) ? deepClone(t) : t
+            }
+            return tempObj
+        }
+
+        function deepClone1(obj, hash = new WeakMap()) {
+            if (null == obj || "object" != typeof obj) return obj;
+            var cloneObj
+            var Constructor = obj.constructor
+           
+            switch (Constructor) {
+                case RegExp:
+                    cloneObj = new Constructor(obj)
+                    break
+                case Date:
+                    cloneObj = new Constructor(obj.getTime())
+                    break
+                default:
+                    if (hash.has(obj)) return hash.get(obj)
+                    cloneObj = new Constructor()
+                    hash.set(obj, cloneObj)
+                    console.log(2, hash.get(obj))
+            }
+            for (var key in obj) {
+           
+                cloneObj[key] = isObj(obj[key]) ? deepClone(obj[key], hash) : obj[key];
+           
+            }
+            return cloneObj
+        }
+
+        var obj1 = deepClone(obj)
+        console.log(obj);
+        console.log(obj1);
+
+
+
+    </script>
+
+</body>
+
+</html>

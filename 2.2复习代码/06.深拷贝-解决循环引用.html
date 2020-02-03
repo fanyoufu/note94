@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>深拷贝与浅拷贝</h1>
+    <script src="./jquery-1.12.4.min.js"></script>
+    <script src="https://cdn.bootcss.com/lodash.js/4.17.15/lodash.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script>
+        var obj = {
+            name: '小王',
+            hobby: ['reading', 'running'],
+            date: new Date(),
+            reg: /abc/ig
+        }
+        obj.a = obj; // 手动加上循环引用
+        function isObj(obj) {
+            return (typeof obj === 'object' || typeof obj === 'function') && obj !== null
+        }
+        // function deepCopy(obj) {
+        //     let tempObj = Array.isArray(obj) ? [] : {}
+        //     for (let key in obj) {
+        //         tempObj[key] = isObj(obj[key]) ? deepCopy(obj[key]) : obj[key]
+        //     }
+        //     return tempObj
+        // }
+        var hash =  new WeakMap()
+        function deepCopy(obj) {
+            if(hash.has(obj)){
+                return hash.get(obj)
+            }
+            var tempObj = Array.isArray(obj) ? [] : {}
+            hash.set(obj,tempObj)
+            for (var key in obj) {
+                tempObj[key] = isObj(obj[key]) ? deepCopy(obj[key],hash) : obj[key]
+            }
+            return tempObj
+        }
+
+        var obj1 = deepCopy(obj)
+        console.log(obj);
+        console.log(obj1);
+        
+        console.log(obj1.hobby === obj.hobby);
+        
+
+    </script>
+
+</body>
+
+</html>
